@@ -122,7 +122,7 @@ const SHOP_DATA = [
     ]
   },
   {
-    id: 1,
+    id: 3,
     title: 'Guns',
     routeName: 'guns',
     items: [
