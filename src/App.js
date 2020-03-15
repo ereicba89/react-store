@@ -11,7 +11,7 @@ import SigninAndSignup from './pages/signin-signup/signin-singup.component'
 
 import Header from './components/header/header.component'
 
-import { auth } from './firebase/firebase.utils'
+import { auth, createUserProfileDocument } from './firebase/firebase.utils'
 
 
 class App extends React.Component {
@@ -27,10 +27,25 @@ class App extends React.Component {
   unsuscribeFromAuth = null
   //concepto de subscripcion
   componentDidMount() {
-    this.unsuscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({ currentUser: user });
+    this.unsuscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
 
-      console.log(user)
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth)
+
+        userRef.onSnapshot(snapshot => {
+          this.setState({
+            currentUser: {
+              id: snapshot.id,
+              ...snapshot.data()
+            }
+          }, () => {
+            console.log(this.state);
+          })
+          console.log(this.state);
+        })
+        
+      }
+      this.setState({currentUser: userAuth})
     })
   }
 
@@ -46,7 +61,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header currentUser={this.state.currentUser}/>
+        <Header currentUser={this.state.currentUser} />
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route path='/guns' component={ShopPage} />
