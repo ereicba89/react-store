@@ -4,7 +4,8 @@
     height: 50px;
     letter-spacing: 0.5px;
     line-height: 50px;
-    padding: 10 35px 10 35px;
+    padding-left: 10px;
+    padding-right: 10px;
     font-size: 15px;
     background-color: black;
     color: white;
@@ -20,7 +21,7 @@
       border: 1px solid black;
     }
 
-    &.google-sing-in {
+    &.google-sign-in{
       background-color: #4285f4;
       color: white;
 
